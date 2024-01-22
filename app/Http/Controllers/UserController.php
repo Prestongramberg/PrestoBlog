@@ -8,6 +8,10 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function storeAvatar() {
+        return 'Hey!@';
+    }
+
     public function showAvatarForm() {
         return view('avatar-form');
     }
