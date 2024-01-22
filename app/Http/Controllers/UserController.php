@@ -8,13 +8,19 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function showAvatarForm() {
+        return view('avatar-form');
+    }
+
     public function profile(User $user) {
         return view('profile-posts', ['username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
+
     public function logout() {
         auth()->logout();
         return redirect('/')->with('success', 'You are now logged out.');
     }
+
     public function showCorrectHomepage() {
         if (auth()->check()) {
             return view('homepage-feed');
