@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function storeAvatar() {
-        return 'Hey!@';
+        return 'Hey!';
     }
 
     public function showAvatarForm() {
