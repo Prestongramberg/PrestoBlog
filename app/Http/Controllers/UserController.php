@@ -8,8 +8,12 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function storeAvatar() {
-        return 'Hey!';
+    public function storeAvatar(Request $request) {
+        $request->validate([
+            'avatar' => 'required|image|max:3000'
+        ]);
+
+        $request->file('avatar')->store('public/avatars');
     }
 
     public function showAvatarForm() {
