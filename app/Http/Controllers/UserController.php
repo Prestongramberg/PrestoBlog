@@ -58,7 +58,9 @@ class UserController extends Controller
                 'currentlyFollowing' => $currentlyFollowing,
                 'avatar' => $user->avatar,
                 'username' => $user->username,
-                'postCount' => $user->posts()->count()
+                'postCount' => $user->posts()->count(),
+                'followerCount' => $user->followers()->count(),
+                'followingCount' => $user->followingTheseUsers()->count()
             ]
         );
     }
@@ -78,7 +80,7 @@ class UserController extends Controller
     public function profileFollowing(User $user)
     {
         $this->getSharedData($user);
-        return view('profile-following', ['posts' => $user->posts()->latest()->get()]);
+        return view('profile-following', ['following' => $user->followingTheseUsers()->latest()->get()]);
     }
 
     public function logout()
@@ -90,7 +92,7 @@ class UserController extends Controller
     public function showCorrectHomepage()
     {
         if (auth()->check()) {
-            return view('homepage-feed');
+            return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->get()]);
         } else {
             return view('homepage');
         }
