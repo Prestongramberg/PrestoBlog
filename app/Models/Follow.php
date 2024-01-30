@@ -10,12 +10,3 @@ class Follow extends Model
 {
     use HasFactory;
 }
-//
-//class Follow extends Model
-//{
-//    use HasFactory;
-//
-//    public static function where(array $array)
-//    {
-//    }
-//}
