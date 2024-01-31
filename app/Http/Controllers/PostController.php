@@ -8,6 +8,12 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+
+    public function search($term)
+    {
+
+    }
+
     public function actuallyUpdate(Post $post, Request $request) {
         $incomingFields = $request->validate([
            'title' => 'required',
