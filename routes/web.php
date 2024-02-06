@@ -49,7 +49,7 @@ Route::get('/profile/{user:username}', [UserController::class, 'profile']);
 Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
 Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
 
-// Chat route
+// Chat Route
 Route::post('/send-chat-message', function (Request $request) {
     $formFields = $request->validate([
         'textvalue' => 'require'

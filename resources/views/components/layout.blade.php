@@ -91,7 +91,8 @@
 </footer>
 
 @auth
-    <div data-username="{{auth()->user()->username}}" data-avatar="{{auth()->user()->avatar}}" id="chat-wrapper" class="chat-wrapper shadow border-top border-right"></div>
+    <div data-username="{{auth()->user()->username}}" data-avatar="{{auth()->user()->avatar}}" id="chat-wrapper"
+         class="chat-wrapper shadow border-top border-right"></div>
 @endauth
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -29,7 +29,7 @@ export default class Chat {
         const test = document.createElement("div")
         test.innerHTML = DOMPurify.sanitize(this.chatField.value)
 
-        axios.post("/send-chat-message", { "textvalue": this.chatField.value })
+        axios.post("/send-chat-message", {"textvalue": this.chatField.value})
 
         this.chatLog.insertAdjacentHTML(
             "beforeend",
