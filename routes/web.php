@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admins-only', function() {
+Route::get('/admins-only', function () {
     return 'Only admins should only be able to see this page';
 })->middleware('can:visitAdminPages');
 
@@ -59,8 +59,15 @@ Route::post('/send-chat-message', function (Request $request) {
         return response()->noContent();
     }
 
-    broadcast(new ChatMessage(['username' =>auth()->user()->username, 'textvalue' => strip_tags($request->textvalue), 'avatar' => auth()->user()->avatar]))->toOthers();
+    broadcast(
+        new ChatMessage(
+            [
+                'username' => auth()->user()->username,
+                'textvalue' => strip_tags($request->textvalue),
+                'avatar' => auth()->user()->avatar
+            ]
+        )
+    )->toOthers();
     return response()->noContent();
-
 })->middleware('mustBeLoggedIn');
 
