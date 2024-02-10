@@ -18,10 +18,11 @@ class PostController extends Controller
         return $posts;
     }
 
-    public function actuallyUpdate(Post $post, Request $request) {
+    public function actuallyUpdate(Post $post, Request $request)
+    {
         $incomingFields = $request->validate([
-           'title' => 'required',
-           'body' => 'required'
+            'title' => 'required',
+            'body' => 'required'
         ]);
 
         $incomingFields['title'] = strip_tags($incomingFields['title']);
@@ -30,21 +31,47 @@ class PostController extends Controller
         $post->update($incomingFields);
         return back()->with('success', 'Post successfully updated.');
     }
-    public function showEditForm(Post $post) {
+
+    public function showEditForm(Post $post)
+    {
         return view('edit-post', ['post' => $post]);
     }
 
-    public function delete(Post $post) {
+    public function delete(Post $post)
+    {
         $post->delete();
         return redirect('/profile/' . auth()->user()->username)->with('success', 'Post successfully deleted.');
     }
 
-    public function viewSinglePost(Post $post) {
+    public function viewSinglePost(Post $post)
+    {
         $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><ol><li><strong><em><h3><br><hr>');
         return view('single-post', ['post' => $post]);
     }
 
-    public function storeNewPost(Request $request) {
+    public function storeNewPost(Request $request)
+    {
+        $incomingFields = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $incomingFields['title'] = strip_tags($incomingFields['title']);
+        $incomingFields['body'] = strip_tags($incomingFields['body']);
+        $incomingFields['user_id'] = auth()->id();
+
+        $newPost = Post::create($incomingFields);
+
+        dispatch(
+            new SendNewPostEmail(
+                ['sendTo' => auth()->user()->email, 'name' => auth()->user()->username, 'title' => $newPost->title]
+            )
+        );
+
+        return redirect("/post/{$newPost->id}")->with('success', "New post successfully created");
+    }
+
+    public function storeNewPostApi(Request $request) {
         $incomingFields = $request->validate([
             'title' => 'required',
             'body' => 'required'
@@ -58,9 +85,11 @@ class PostController extends Controller
 
         dispatch(new SendNewPostEmail(['sendTo' => auth()->user()->email, 'name' => auth()->user()->username, 'title' => $newPost->title]));
 
-        return redirect("/post/{$newPost->id}")->with('success', "New post successfully created");
+        return $newPost->id;
     }
-    public function showCreateForm() {
+
+    public function showCreateForm()
+    {
         return view('create-post');
     }
 }
