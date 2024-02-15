@@ -246,6 +246,7 @@ textarea.tall-textarea {
         transform: rotate(360deg);
     }
 }
+
 @keyframes spin {
     100% {
         -webkit-transform: rotate(360deg);
