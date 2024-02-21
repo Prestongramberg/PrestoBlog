@@ -14,7 +14,7 @@ export default class Chat {
         this.events()
     }
 
-    // Events
+    // Event Listener
     events() {
         this.chatForm.addEventListener("submit", e => {
             e.preventDefault()
