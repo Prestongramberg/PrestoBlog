@@ -21,7 +21,7 @@ class Post extends Model
         ];
     }
 
-    // Assigning user to user
+    // Assigning user to user relation
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
